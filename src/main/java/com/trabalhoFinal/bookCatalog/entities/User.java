@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -18,6 +20,8 @@ public class User implements Serializable{
 	private Long id;
 	private String name;
 	private String email;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Instant dateBirthday;
 	private String phone;
 	private String password;
