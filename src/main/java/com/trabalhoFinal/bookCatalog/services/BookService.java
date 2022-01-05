@@ -3,11 +3,17 @@ package com.trabalhoFinal.bookCatalog.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.trabalhoFinal.bookCatalog.entities.Book;
 import com.trabalhoFinal.bookCatalog.repositories.BookRepository;
+import com.trabalhoFinal.bookCatalog.services.exceptions.DatabaseException;
+import com.trabalhoFinal.bookCatalog.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class BookService {
@@ -21,7 +27,7 @@ public class BookService {
 	
 	public Book findById(Long id) {
 		Optional<Book> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public Book insert(Book obj) {
@@ -29,24 +35,24 @@ public class BookService {
 	}
 	
 	public void delete(Long id) {
-	//	try {
+		try {
 			repository.deleteById(id);
-	/*	} catch (EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
-		}*/
+		}
 	}
 	
 	public Book update(Long id, Book obj) {
-	//	try {
+		try {
 			@SuppressWarnings("deprecation")
 			Book entity = repository.getOne(id);
 			updateData(entity, obj);
 			return repository.save(entity);
-	/*	} catch (EntityNotFoundException e) {
+		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
-		}	*/
+		}	
 	} 
 
 	private void updateData(Book entity, Book obj) {

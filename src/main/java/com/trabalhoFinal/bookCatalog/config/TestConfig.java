@@ -1,5 +1,8 @@
 package com.trabalhoFinal.bookCatalog.config;
 
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -26,11 +29,16 @@ public class TestConfig implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		User u = new User(1L, "Maria", "maria@gamil.com", null, "999999999", "123456");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-		userRepository.save(u);
+		User u1 = new User(null, "Maria", "maria@gamil.com", sdf.parse("04/07/1984"), "999999999", "123456");
+		User u2 = new User(null, "Bob", "bob@gamil.com", sdf.parse("04/02/1984"), "999999999", "123456");
+		User u3 = new User(null, "Carlos", "carlos@gamil.com", sdf.parse("04/05/1984"), "999999999", "123456");
+		User u4 = new User(null, "Marcos", "marcos@gamil.com", sdf.parse("04/010/1984"), "999999999", "123456");
 		
-		Book b = new Book(null, "Os Segredos da Mente Milionária", "T. Harv Eker", "Aprenda A Enriquecer Mudando Seus Conceitos Sobre o Dinheiro.", null, null);
+		userRepository.saveAll(Arrays.asList(u1, u2, u3, u4));
+		
+		Book b = new Book(null, "Os Segredos da Mente Milionária", "T. Harv Eker", "Aprenda A Enriquecer Mudando Seus Conceitos Sobre o Dinheiro.", sdf.parse("19/10/2015"), sdf.parse("25/12/2015"));
 		
 		bookRepository.save(b);
 		
@@ -40,7 +48,10 @@ public class TestConfig implements CommandLineRunner {
 		
 		b.getGenre().add(g);
 					
-		b.getUsers().add(u);
+		b.getUsers().add(u1);
+		b.getUsers().add(u2);
+		b.getUsers().add(u3);
+		b.getUsers().add(u4);
 		
 		bookRepository.save(b);
 		
