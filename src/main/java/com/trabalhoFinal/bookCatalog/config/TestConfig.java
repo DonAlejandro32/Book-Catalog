@@ -38,5 +38,12 @@ public class TestConfig implements CommandLineRunner {
 		
 		genreRepository.save(g);
 		
+		b.getGenre().add(g);
+					
+		b.getUsers().add(u);
+		
+		bookRepository.save(b);
+		
+		
 	}
 }

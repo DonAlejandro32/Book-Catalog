@@ -24,4 +24,32 @@ public class GenreService {
 		return obj.get();
 	}
 	
+	public Genre insert(Genre obj) {
+		return repository.save(obj);
+	}
+	
+	public void delete(Long id) {
+	//	try {
+			repository.deleteById(id);
+	/*	} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}*/
+	}
+	
+	public Genre update(Long id, Genre obj) {
+	//	try {
+			@SuppressWarnings("deprecation")
+			Genre entity = repository.getOne(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+	/*	} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}	*/
+	} 
+
+	private void updateData(Genre entity, Genre obj) {
+		entity.setName(obj.getName());
+	}
 }

@@ -1,15 +1,19 @@
 package com.trabalhoFinal.bookCatalog.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User implements Serializable{
@@ -22,14 +26,18 @@ public class User implements Serializable{
 	private String email;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-	private Instant dateBirthday;
+	private Date dateBirthday;
 	private String phone;
 	private String password;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "users")
+	private Set<Book> books = new HashSet<>();
 	
 	public User() {
 	}
 
-	public User(Long id, String name, String email, Instant dateBirthday, String phone, String password) {
+	public User(Long id, String name, String email, Date dateBirthday, String phone, String password) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -63,11 +71,11 @@ public class User implements Serializable{
 		this.email = email;
 	}
 
-	public Instant getDateBirthday() {
+	public Date getDateBirthday() {
 		return dateBirthday;
 	}
 
-	public void setDateBirthday(Instant dateBirthday) {
+	public void setDateBirthday(Date dateBirthday) {
 		this.dateBirthday = dateBirthday;
 	}
 

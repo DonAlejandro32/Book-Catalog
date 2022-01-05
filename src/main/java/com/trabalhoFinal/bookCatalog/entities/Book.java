@@ -1,13 +1,18 @@
 package com.trabalhoFinal.bookCatalog.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -25,15 +30,24 @@ public class Book implements Serializable{
 	private String description;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-	private Instant startReading;
+	private Date startReading;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-	private Instant endReading;
+	private Date endReading;
+	
+	@ManyToMany
+	@JoinTable(name = "tb_book_user", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<User> users = new HashSet<>();
+	
+	@ManyToMany
+	@JoinTable(name = "tb_book_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
+	private Set<Genre> genres = new HashSet<>();
+	
 	
 	public Book() {
 	}
 
-	public Book(Long id, String name, String author, String description, Instant startReading, Instant endReading) {
+	public Book(Long id, String name, String author, String description, Date startReading, Date endReading) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -75,20 +89,28 @@ public class Book implements Serializable{
 		this.description = description;
 	}
 
-	public Instant getStartReading() {
+	public Date getStartReading() {
 		return startReading;
 	}
 
-	public void setStartReading(Instant startReading) {
+	public void setStartReading(Date startReading) {
 		this.startReading = startReading;
 	}
 
-	public Instant getEndReading() {
+	public Date getEndReading() {
 		return endReading;
 	}
 
-	public void setEndReading(Instant endReading) {
+	public void setEndReading(Date endReading) {
 		this.endReading = endReading;
+	}
+	
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public Set<Genre> getGenre() {
+		return genres;
 	}
 
 	@Override

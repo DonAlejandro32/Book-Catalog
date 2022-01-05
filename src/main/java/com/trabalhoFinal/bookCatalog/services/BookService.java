@@ -24,4 +24,37 @@ public class BookService {
 		return obj.get();
 	}
 	
+	public Book insert(Book obj) {
+		return repository.save(obj);
+	}
+	
+	public void delete(Long id) {
+	//	try {
+			repository.deleteById(id);
+	/*	} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}*/
+	}
+	
+	public Book update(Long id, Book obj) {
+	//	try {
+			@SuppressWarnings("deprecation")
+			Book entity = repository.getOne(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+	/*	} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}	*/
+	} 
+
+	private void updateData(Book entity, Book obj) {
+		entity.setName(obj.getName());
+		entity.setAuthor(obj.getAuthor());
+		entity.setDescription(obj.getDescription());
+		entity.setStartReading(obj.getStartReading());
+		entity.setEndReading(obj.getEndReading());
+	}
+	
 }

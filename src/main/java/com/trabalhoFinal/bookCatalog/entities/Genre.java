@@ -1,13 +1,18 @@
 package com.trabalhoFinal.bookCatalog.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_genre")
@@ -18,6 +23,10 @@ public class Genre implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "genres")
+	private Set<Book> books = new HashSet<>();
 	
 	public Genre() {
 	}
