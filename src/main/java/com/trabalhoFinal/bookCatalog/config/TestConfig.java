@@ -1,4 +1,4 @@
-package com.trabalhoFinal.bookCatalog.config;
+/*package com.trabalhoFinal.bookCatalog.config;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -57,4 +57,4 @@ public class TestConfig implements CommandLineRunner {
 		
 		
 	}
-}
+}        */
